@@ -1,201 +1,203 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Memory Lab</title>
-  <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #f5f5f5;
-      color: #333;
-      line-height: 1.6;
-      margin: 0;
-      padding: 0;
-    }
-    header {
-      background-color: #e0e0e0;
-      padding: 2rem;
-      text-align: center;
-    }
-    h1 {
-      margin: 0;
-      font-size: 2.5rem;
-      color: #2d2d2d;
-    }
-    p.description {
-      font-size: 1.2rem;
-      color: #555;
-    }
-    section {
-      background-color: #fff;
-      margin: 2rem;
-      padding: 2rem;
-      border-radius: 10px;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-    }
-    h2 {
-      margin-top: 0;
-      color: #1a1a1a;
-    }
-    button {
-      background-color: #7e9abf;
-      color: white;
-      border: none;
-      padding: 0.75rem 1.5rem;
-      font-size: 1rem;
-      border-radius: 5px;
-      cursor: pointer;
-      margin-bottom: 1rem;
-    }
-    button:hover {
-      background-color: #5d7ca1;
-    }
-    pre {
-      background-color: #f0f0f0;
-      padding: 1rem;
-      overflow-x: auto;
-      white-space: pre-wrap;
-      border-radius: 6px;
-    }
-  </style>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Memory is a Lie</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <header>
-    <h1>Memory Lab</h1>
-    <p class="description">Explore your brain’s capabilities through fun, science-backed memory games and reflections.</p>
+    <h1>Memory is a Lie</h1>
+    <p>Explore your brain's capabilities through fun, science-backed memory games designed to test and improve your cognitive abilities.</p>
   </header>
 
-  <section>
-    <h2>Game 1: Number Crunch – Short-Term Memory & Chunking</h2>
-    <button onclick="startNumberCrunch()">Play Number Crunch</button>
-    <pre id="numberOutput"></pre>
-    <p><strong>Explanation:</strong> Placeholder text about Miller's 7 ± 2 rule and chunking.</p>
-    <p><strong>Reflection:</strong> Placeholder text for user reflection and insight.</p>
-  </section>
+  <main class="container">
 
-  <section>
-    <h2>Game 2: Location Recall – Visuospatial Working Memory</h2>
-    <button onclick="startLocationRecall()">Play Location Recall</button>
-    <pre id="gridOutput"></pre>
-    <p><strong>Explanation:</strong> Placeholder text about visuospatial memory and Baddeley’s model.</p>
-    <p><strong>Reflection:</strong> Placeholder text for user reflection and learning.</p>
-  </section>
+    <!-- Game 1: Number Crunch -->
+    <section class="game-row" id="number-crunch-row">
+      <div class="game-header">
+        <h2 class="game-title">Number Crunch</h2>
+        <button class="learn-more-btn" onclick="toggleLearnMore('nc-learn-more')">Learn More</button>
+      </div>
+      <div class="game-content">
+        <p class="instructions">
+          Challenge your working memory by memorizing increasingly longer number sequences. Watch closely as numbers appear for a limited time, then recall them in the exact order. Your performance reveals your digit span capacity.
+        </p>
+        <div class="game-area">
+          <div class="progress-bar">
+            <div id="nc-progress" class="progress-fill"></div>
+          </div>
+          <div class="timer">
+            Time: <span id="nc-timer" class="timer-value">--</span>
+          </div>
+          <div id="nc-sequence" class="sequence">Ready to start</div>
+          <input id="nc-input" class="input-field" type="text" placeholder="Enter the number sequence" disabled>
+          <div class="button-group">
+            <button id="nc-start">Start Game</button>
+            <button id="nc-submit" class="success" disabled>Submit</button>
+            <button id="nc-end" class="secondary" disabled>End Game</button>
+          </div>
+          <div id="nc-feedback" class="feedback"></div>
+          <div class="stats">
+            <div class="stat-item">
+              <div id="nc-round" class="stat-value">0</div>
+              <div class="stat-label">Round</div>
+            </div>
+            <div class="stat-item">
+              <div id="nc-score" class="stat-value">0</div>
+              <div class="stat-label">Score</div>
+            </div>
+            <div class="stat-item">
+              <div id="nc-high" class="stat-value">0</div>
+              <div class="stat-label">Best</div>
+            </div>
+          </div>
+          <div id="nc-learn-more" class="learn-more-content">
+            <p>Number Crunch directly exercises your working memory, specifically the "phonological loop" that handles verbal and numerical information. The average adult can remember 7±2 digits at once, known as the digit span. As you play, your brain forms temporary neural connections to hold these numbers. Performance improves with practice as your brain develops more efficient encoding strategies, like chunking numbers together or creating visual patterns. This training has been shown to enhance focus, attention to detail, and information processing—skills that transfer to everyday tasks like remembering phone numbers, PINs, and following multi-step instructions.</p>
+          </div>
+        </div>
+      </div>
+    </section>
 
-  <section>
-    <h2>Game 3: False Memory – DRM Paradigm</h2>
-    <button onclick="startFalseMemory()">Play False Memory</button>
-    <pre id="falseMemoryOutput"></pre>
-    <p><strong>Explanation:</strong> Placeholder text about the DRM paradigm and the Mandela Effect.</p>
-    <p><strong>Reflection:</strong> Placeholder text on memory suggestibility and reconstruction.</p>
-  </section>
+    <!-- Game 2: Location Recall -->
+    <section class="game-row" id="location-recall-row">
+      <div class="game-header">
+        <h2 class="game-title">Location Recall</h2>
+        <button class="learn-more-btn" onclick="toggleLearnMore('lr-learn-more')">Learn More</button>
+      </div>
+      <div class="game-content">
+        <p class="instructions">
+          Test your visual-spatial memory by remembering both locations and sequences. Various symbols will appear on a grid - memorize their positions and order. Then click the cells in the exact sequence they appeared. Difficulty increases with grid size and number of targets.
+        </p>
+        <div class="game-area">
+          <div class="progress-bar">
+            <div id="lr-progress" class="progress-fill"></div>
+          </div>
+          <div class="timer">
+            Time: <span id="lr-timer" class="timer-value">--</span>
+          </div>
+          <div id="lr-grid" class="grid-display">Ready to start</div>
+          <div class="button-group">
+            <button id="lr-start">Start Game</button>
+            <button id="lr-end" class="secondary" disabled>End Game</button>
+          </div>
+          <div id="lr-feedback" class="feedback"></div>
+          <div class="stats">
+            <div class="stat-item">
+              <div id="lr-size" class="stat-value">3×3</div>
+              <div class="stat-label">Grid Size</div>
+            </div>
+            <div class="stat-item">
+              <div id="lr-targets" class="stat-value">2</div>
+              <div class="stat-label">Targets</div>
+            </div>
+            <div class="stat-item">
+              <div id="lr-score" class="stat-value">0</div>
+              <div class="stat-label">Score</div>
+            </div>
+          </div>
+          <div id="lr-learn-more" class="learn-more-content">
+            <p>Location Recall engages your visuospatial memory, which is handled by the "visuospatial sketchpad" component of working memory. This game challenges both your ability to remember what you saw and where you saw it—two distinct neural processes that work together. The game activates brain regions including the hippocampus (vital for spatial memory) and the prefrontal cortex (which helps maintain attention and working memory). As grid sizes increase, your brain must develop more sophisticated encoding strategies. Regular practice with this type of task has been linked to improvements in navigation skills, mental rotation abilities, and even mathematical reasoning since many math concepts rely on spatial understanding.</p>
+          </div>
+        </div>
+      </div>
+    </section>
 
-  <section>
-    <h2>Game 4: Change Blindness – Attention & Memory</h2>
-    <button onclick="startChangeBlindness()">Play Change Blindness</button>
-    <pre id="changeBlindnessOutput"></pre>
-    <p><strong>Explanation:</strong> Placeholder text about change blindness and attentional focus.</p>
-    <p><strong>Reflection:</strong> Placeholder text about the role of attention in perception and memory.</p>
-  </section>
+    <!-- Game 3: False Memory -->
+    <section class="game-row" id="false-memory-row">
+      <div class="game-header">
+        <h2 class="game-title">False Memory</h2>
+        <button class="learn-more-btn" onclick="toggleLearnMore('fm-learn-more')">Learn More</button>
+      </div>
+      <div class="game-content">
+        <p class="instructions">
+          Experience how your brain can create false memories. Study a list of related words, then try to recall as many as possible. The twist: your brain might "remember" words that were never shown because they're strongly associated with the list theme. This demonstrates the DRM (Deese-Roediger-McDermott) effect.
+        </p>
+        <div class="game-area">
+          <div class="progress-bar">
+            <div id="fm-progress" class="progress-fill"></div>
+          </div>
+          <div class="timer">
+            Time: <span id="fm-timer" class="timer-value">--</span>
+          </div>
+          <div id="fm-words" class="word-list">Ready to start</div>
+          <textarea id="fm-input" class="input-field" rows="3" placeholder="Type all the words you remember..." disabled></textarea>
+          <div class="button-group">
+            <button id="fm-start">Start Game</button>
+            <button id="fm-submit" class="success" disabled>Submit</button>
+            <button id="fm-end" class="secondary" disabled>End Game</button>
+          </div>
+          <div id="fm-feedback" class="feedback"></div>
+          <div class="stats">
+            <div class="stat-item">
+              <div id="fm-correct" class="stat-value">0</div>
+              <div class="stat-label">Correct</div>
+            </div>
+            <div class="stat-item">
+              <div id="fm-false" class="stat-value">0</div>
+              <div class="stat-label">False</div>
+            </div>
+            <div class="stat-item">
+              <div id="fm-sets" class="stat-value">0</div>
+              <div class="stat-label">Sets</div>
+            </div>
+          </div>
+          <div id="fm-learn-more" class="learn-more-content">
+            <p>The False Memory game demonstrates a fascinating quirk of human memory: our brains don't simply record and play back memories like a video—they actively reconstruct them each time we remember. The Deese-Roediger-McDermott (DRM) paradigm shows how semantic networks in our brain can activate related concepts so strongly that we believe we encountered them when we didn't. This happens because memory formation involves creating associations between related concepts. When several related words are processed together, the central connecting concept (the "critical lure") becomes highly activated in your neural networks. This reveals why eyewitness testimony can be unreliable and how suggestion can implant false memories—knowledge that has revolutionized forensic psychology and interview techniques.</p>
+          </div>
+        </div>
+      </div>
+    </section>
 
-  <script>
-    function sleep(ms) {
-      return new Promise(resolve => setTimeout(resolve, ms));
-    }
+    <!-- Game 2: Change Blindness Emoji -->
+    <section class="game-row" id="change-blindness-row">
+      <div class="game-header">
+        <h2 class="game-title">Emoji Change Blindness</h2>
+        <button class="learn-more-btn" onclick="toggleLearnMore('cb-learn-more')">Learn More</button>
+      </div>
+      <div class="game-content">
+        <p class="instructions">
+          Test your change detection skills. A grid of emojis will flash on screen—can you spot which one changes?
+        </p>
+        <div class="game-area">
+          <div class="progress-bar">
+            <div id="cb-progress" class="progress-fill"></div>
+          </div>
+          <div class="timer">
+            Time: <span id="cb-timer" class="timer-value">--</span>
+          </div>
+          <div id="cb-grid" class="sequence">Ready to start</div>
+          <input id="cb-input" class="input-field" type="text" placeholder="Enter changed emoji index (1–9)" disabled>
+          <div class="button-group">
+            <button id="cb-start">Start Game</button>
+            <button id="cb-submit" class="success" disabled>Submit</button>
+            <button id="cb-end" class="secondary" disabled>End Game</button>
+          </div>
+          <div id="cb-feedback" class="feedback"></div>
+          <div class="stats">
+            <div class="stat-item">
+              <div id="cb-round" class="stat-value">0</div>
+              <div class="stat-label">Round</div>
+            </div>
+            <div class="stat-item">
+              <div id="cb-score" class="stat-value">0</div>
+              <div class="stat-label">Score</div>
+            </div>
+            <div class="stat-item">
+              <div id="cb-high" class="stat-value">0</div>
+              <div class="stat-label">Best</div>
+            </div>
+          </div>
+          <div id="cb-learn-more" class="learn-more-content">
+            <p>Change blindness is a psychological phenomenon where you fail to notice changes in a visual scene. This game simulates this by briefly flashing two nearly identical emoji grids—your task is to detect which emoji changed position or identity.</p>
+          </div>
+        </div>
+      </div>
+    </section>
 
-    async function startNumberCrunch() {
-      const output = document.getElementById('numberOutput');
-      let round = 3;
-      while (true) {
-        const sequence = Array.from({ length: round }, () => Math.floor(Math.random() * 10)).join('');
-        output.textContent = `Memorize: ${sequence}`;
-        await sleep(3000);
-        output.textContent = '';
-        const answer = prompt('What was the number?');
-        if (answer !== sequence) {
-          output.textContent = `Wrong! The correct sequence was ${sequence}. You reached round ${round}.`;
-          break;
-        }
-        round++;
-      }
-    }
-
-    function generateGrid(size, symbols) {
-      const grid = [];
-      const flat = [];
-      for (let i = 0; i < size * size; i++) flat.push('');
-      const positions = [];
-      while (positions.length < symbols.length) {
-        const idx = Math.floor(Math.random() * flat.length);
-        if (!flat[idx]) {
-          flat[idx] = symbols[positions.length];
-          positions.push(idx);
-        }
-      }
-      for (let i = 0; i < size; i++) {
-        grid.push(flat.slice(i * size, (i + 1) * size));
-      }
-      return { grid, positions, flat };
-    }
-
-    async function startLocationRecall() {
-      const output = document.getElementById('gridOutput');
-      const symbols = ['★', '■', '▲', '◆', '●'];
-      let size = 3;
-      let targets = 2;
-      while (true) {
-        const chosen = symbols.slice(0, targets);
-        const { grid, flat } = generateGrid(size, chosen);
-        output.textContent = grid.map(row => row.map(cell => cell || ' ').join(' ')).join('\n');
-        await sleep(4000);
-        output.textContent = '';
-        let correct = true;
-        for (const sym of chosen) {
-          const guess = prompt(`Where was the ${sym}? (0-${size * size - 1})`);
-          const idx = flat.indexOf(sym);
-          if (parseInt(guess) !== idx) {
-            correct = false;
-            output.textContent = `Wrong! ${sym} was at ${idx}. Game over.`;
-            return;
-          }
-        }
-        size = Math.min(size + 1, 5);
-        targets = Math.min(targets + 1, symbols.length);
-      }
-    }
-
-    function startFalseMemory() {
-      const output = document.getElementById('falseMemoryOutput');
-      const wordList = ["bed", "rest", "awake", "tired", "dream", "wake", "snooze", "blanket", "doze", "slumber"];
-      const lure = "sleep";
-      output.textContent = "Memorize these words:\n" + wordList.join(", ");
-      setTimeout(() => {
-        const recall = prompt("Type as many words as you remember:");
-        if (recall.toLowerCase().includes(lure)) {
-          output.textContent = `You falsely recalled the word \"${lure}\"! This is the DRM effect.`;
-        } else {
-          output.textContent = `Nice! You didn't fall for the false memory. Words recalled: ${recall}`;
-        }
-      }, 6000);
-    }
-
-    function startChangeBlindness() {
-      const output = document.getElementById('changeBlindnessOutput');
-      const scene1 = "A man in a red shirt stands next to a blue car in the parking lot.";
-      const scene2 = "A man in a red shirt stands next to a green car in the parking lot.";
-      output.textContent = `Scene: ${scene1}`;
-      setTimeout(() => {
-        output.textContent = `Scene: ${scene2}`;
-        setTimeout(() => {
-          const change = prompt("Did you notice anything change?");
-          if (change.toLowerCase().includes("car") || change.toLowerCase().includes("color")) {
-            output.textContent = "Correct! The car color changed from blue to green.";
-          } else {
-            output.textContent = "Missed it! The car color changed from blue to green.";
-          }
-        }, 2000);
-      }, 4000);
-    }
-  </script>
+  </main>
+  <!-- External JS -->
+  <script src="script.js"></script>
 </body>
 </html>
