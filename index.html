@@ -1,39 +1,201 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Number Memory</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Memory Lab</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f5f5f5;
+      color: #333;
+      line-height: 1.6;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: #e0e0e0;
+      padding: 2rem;
+      text-align: center;
+    }
+    h1 {
+      margin: 0;
+      font-size: 2.5rem;
+      color: #2d2d2d;
+    }
+    p.description {
+      font-size: 1.2rem;
+      color: #555;
+    }
+    section {
+      background-color: #fff;
+      margin: 2rem;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+    h2 {
+      margin-top: 0;
+      color: #1a1a1a;
+    }
+    button {
+      background-color: #7e9abf;
+      color: white;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-bottom: 1rem;
+    }
+    button:hover {
+      background-color: #5d7ca1;
+    }
+    pre {
+      background-color: #f0f0f0;
+      padding: 1rem;
+      overflow-x: auto;
+      white-space: pre-wrap;
+      border-radius: 6px;
+    }
+  </style>
 </head>
 <body>
+  <header>
+    <h1>Memory Lab</h1>
+    <p class="description">Explore your brain’s capabilities through fun, science-backed memory games and reflections.</p>
+  </header>
 
-<h2>Memorize This Number:</h2>
-<p id="numberDisplay" style="font-size: 32px;"></p>
-<input id="userInput" placeholder="Type the number here" style="font-size: 24px;">
-<button onclick="checkNumber()">Check</button>
-<p id="feedback"></p>
+  <section>
+    <h2>Game 1: Number Crunch – Short-Term Memory & Chunking</h2>
+    <button onclick="startNumberCrunch()">Play Number Crunch</button>
+    <pre id="numberOutput"></pre>
+    <p><strong>Explanation:</strong> Placeholder text about Miller's 7 ± 2 rule and chunking.</p>
+    <p><strong>Reflection:</strong> Placeholder text for user reflection and insight.</p>
+  </section>
 
-<script>
-  let randomNumber = "";
+  <section>
+    <h2>Game 2: Location Recall – Visuospatial Working Memory</h2>
+    <button onclick="startLocationRecall()">Play Location Recall</button>
+    <pre id="gridOutput"></pre>
+    <p><strong>Explanation:</strong> Placeholder text about visuospatial memory and Baddeley’s model.</p>
+    <p><strong>Reflection:</strong> Placeholder text for user reflection and learning.</p>
+  </section>
 
-  function generateNumber(length = 6) {
-    randomNumber = "";
-    for (let i = 0; i < length; i++) {
-      randomNumber += Math.floor(Math.random() * 10);
+  <section>
+    <h2>Game 3: False Memory – DRM Paradigm</h2>
+    <button onclick="startFalseMemory()">Play False Memory</button>
+    <pre id="falseMemoryOutput"></pre>
+    <p><strong>Explanation:</strong> Placeholder text about the DRM paradigm and the Mandela Effect.</p>
+    <p><strong>Reflection:</strong> Placeholder text on memory suggestibility and reconstruction.</p>
+  </section>
+
+  <section>
+    <h2>Game 4: Change Blindness – Attention & Memory</h2>
+    <button onclick="startChangeBlindness()">Play Change Blindness</button>
+    <pre id="changeBlindnessOutput"></pre>
+    <p><strong>Explanation:</strong> Placeholder text about change blindness and attentional focus.</p>
+    <p><strong>Reflection:</strong> Placeholder text about the role of attention in perception and memory.</p>
+  </section>
+
+  <script>
+    function sleep(ms) {
+      return new Promise(resolve => setTimeout(resolve, ms));
     }
-    document.getElementById("numberDisplay").textContent = randomNumber;
-    setTimeout(() => {
-      document.getElementById("numberDisplay").textContent = "";
-    }, 3000);
-  }
 
-  function checkNumber() {
-    const input = document.getElementById("userInput").value;
-    document.getElementById("feedback").textContent =
-      input === randomNumber ? "Correct!" : "Wrong, try again!";
-  }
+    async function startNumberCrunch() {
+      const output = document.getElementById('numberOutput');
+      let round = 3;
+      while (true) {
+        const sequence = Array.from({ length: round }, () => Math.floor(Math.random() * 10)).join('');
+        output.textContent = `Memorize: ${sequence}`;
+        await sleep(3000);
+        output.textContent = '';
+        const answer = prompt('What was the number?');
+        if (answer !== sequence) {
+          output.textContent = `Wrong! The correct sequence was ${sequence}. You reached round ${round}.`;
+          break;
+        }
+        round++;
+      }
+    }
 
-  // Auto start
-  generateNumber();
-</script>
+    function generateGrid(size, symbols) {
+      const grid = [];
+      const flat = [];
+      for (let i = 0; i < size * size; i++) flat.push('');
+      const positions = [];
+      while (positions.length < symbols.length) {
+        const idx = Math.floor(Math.random() * flat.length);
+        if (!flat[idx]) {
+          flat[idx] = symbols[positions.length];
+          positions.push(idx);
+        }
+      }
+      for (let i = 0; i < size; i++) {
+        grid.push(flat.slice(i * size, (i + 1) * size));
+      }
+      return { grid, positions, flat };
+    }
 
+    async function startLocationRecall() {
+      const output = document.getElementById('gridOutput');
+      const symbols = ['★', '■', '▲', '◆', '●'];
+      let size = 3;
+      let targets = 2;
+      while (true) {
+        const chosen = symbols.slice(0, targets);
+        const { grid, flat } = generateGrid(size, chosen);
+        output.textContent = grid.map(row => row.map(cell => cell || ' ').join(' ')).join('\n');
+        await sleep(4000);
+        output.textContent = '';
+        let correct = true;
+        for (const sym of chosen) {
+          const guess = prompt(`Where was the ${sym}? (0-${size * size - 1})`);
+          const idx = flat.indexOf(sym);
+          if (parseInt(guess) !== idx) {
+            correct = false;
+            output.textContent = `Wrong! ${sym} was at ${idx}. Game over.`;
+            return;
+          }
+        }
+        size = Math.min(size + 1, 5);
+        targets = Math.min(targets + 1, symbols.length);
+      }
+    }
+
+    function startFalseMemory() {
+      const output = document.getElementById('falseMemoryOutput');
+      const wordList = ["bed", "rest", "awake", "tired", "dream", "wake", "snooze", "blanket", "doze", "slumber"];
+      const lure = "sleep";
+      output.textContent = "Memorize these words:\n" + wordList.join(", ");
+      setTimeout(() => {
+        const recall = prompt("Type as many words as you remember:");
+        if (recall.toLowerCase().includes(lure)) {
+          output.textContent = `You falsely recalled the word \"${lure}\"! This is the DRM effect.`;
+        } else {
+          output.textContent = `Nice! You didn't fall for the false memory. Words recalled: ${recall}`;
+        }
+      }, 6000);
+    }
+
+    function startChangeBlindness() {
+      const output = document.getElementById('changeBlindnessOutput');
+      const scene1 = "A man in a red shirt stands next to a blue car in the parking lot.";
+      const scene2 = "A man in a red shirt stands next to a green car in the parking lot.";
+      output.textContent = `Scene: ${scene1}`;
+      setTimeout(() => {
+        output.textContent = `Scene: ${scene2}`;
+        setTimeout(() => {
+          const change = prompt("Did you notice anything change?");
+          if (change.toLowerCase().includes("car") || change.toLowerCase().includes("color")) {
+            output.textContent = "Correct! The car color changed from blue to green.";
+          } else {
+            output.textContent = "Missed it! The car color changed from blue to green.";
+          }
+        }, 2000);
+      }, 4000);
+    }
+  </script>
 </body>
 </html>
